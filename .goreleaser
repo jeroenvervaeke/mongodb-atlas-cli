@@ -22,17 +22,17 @@ builds:
     id: macos
     goos: [darwin]
     goarch: [amd64,arm64]
-    hooks:
-      # This will notarize Apple binaries and replace goreleaser bins with the notarized ones
-      post:
-        - cmd: ./build/package/atlascli_mac_notarize.sh
-          output: true
+    # hooks:
+    #   # This will notarize Apple binaries and replace goreleaser bins with the notarized ones
+    #   post:
+    #     - cmd: ./build/package/atlascli_mac_notarize.sh
+    #       output: true
   - <<: *build_defaults
     id: windows
     goos: [windows]
     goarch: [amd64]
-    hooks:
-      post: ./build/package/atlascli_windows_notarize.sh
+    # hooks:
+    #   post: ./build/package/atlascli_windows_notarize.sh
 archives:
 - id: linux
   name_template: "mongodb-atlas-cli_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
