@@ -124,6 +124,9 @@ changelog:
     - '^test:'
     - '^task:'
     - '^build(deps):'
+msi:
+  name: mongodb-atlas-cli_{{ .Version }}_windows_{{.MsiArch}}.msi
+  wxs: ./build/package/wix/atlascli.json
 # signs:
 #   - id: linux_artifacts
 #     signature: "${artifact}.sig"
@@ -142,5 +145,3 @@ release:
       owner: jeroenvervaeke
       name: mongodb-atlas-cli
   name_template: "MongoDB Atlas CLI {{.Version}}"
-  extra_files:
-    - glob: ./bin/*.msi
