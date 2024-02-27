@@ -127,7 +127,7 @@ changelog:
     - '^build(deps):'
 msi:
   - name: mongodb-atlas-cli_{{ .Version }}_windows_x86_64
-    wxs: ./build/package/wix/atlascli/product.wsx
+    wxs: ./build/package/wix/atlascli/product.wxs
 # signs:
 #   - id: linux_artifacts
 #     signature: "${artifact}.sig"
