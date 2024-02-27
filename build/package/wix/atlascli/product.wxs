@@ -5,6 +5,7 @@
 <?elseif $(sys.BUILDARCH)=x64?>
     <?define Program_Files="ProgramFiles64Folder"?>
 <?else?>
+<?error Unsupported value of sys.BUILDARCH="$(sys)"?>
     <?error Unsupported value of sys.BUILDARCH="$(sys.BUILDARCH)"?>
 <?endif?>
 
