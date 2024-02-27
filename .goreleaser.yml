@@ -127,10 +127,6 @@ changelog:
 msi:
   - name: mongodb-atlas-cli_{{ .Version }}_windows_x86_64
     wxs: ./build/package/wix/atlascli.wxs
-    hooks:
-      # This will notarize Apple binaries and replace goreleaser bins with the notarized ones
-      before:
-        - cmd: echo {{ .Binary }}
 # signs:
 #   - id: linux_artifacts
 #     signature: "${artifact}.sig"
