@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 
-<?if $(var.Platform)=x86?>
+<?if $(sys.BUILDARCH)=x86?>
     <?define Program_Files="ProgramFilesFolder"?>
-<?elseif $(var.Platform)=x64?>
+<?elseif $(sys.BUILDARCH)=x64?>
     <?define Program_Files="ProgramFiles64Folder"?>
 <?else?>
-    <?error Unsupported value of var.Platform="$(var.Platform)"?>
+    <?error Unsupported value of sys.BUILDARCH="$(sys.BUILDARCH)"?>
 <?endif?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
