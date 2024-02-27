@@ -11,7 +11,7 @@ builds:
   - <<: &build_defaults
       env:
         - CGO_ENABLED=0
-      binary: atlas
+      binary: bin/atlas
       main: ./cmd/atlas
       ldflags:
         - -s -w -X github.com/mongodb/mongodb-atlas-cli/internal/version.Version={{.Version}} -X github.com/mongodb/mongodb-atlas-cli/internal/version.GitCommit={{.FullCommit}} -X github.com/mongodb/mongodb-atlas-cli/internal/config.ToolName=atlascli
@@ -126,7 +126,11 @@ changelog:
     - '^build(deps):'
 msi:
   - name: mongodb-atlas-cli_{{ .Version }}_windows_x86_64
-    wxs: ./build/package/wix/atlascli.json
+    wxs: ./build/package/wix/atlascli.wxs
+    hooks:
+      # This will notarize Apple binaries and replace goreleaser bins with the notarized ones
+      before:
+        - cmd: echo {{ .Binary }}
 # signs:
 #   - id: linux_artifacts
 #     signature: "${artifact}.sig"
