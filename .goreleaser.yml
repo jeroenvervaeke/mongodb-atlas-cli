@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema-pro.json
 project_name: atlascli
 
 monorepo:
@@ -126,7 +127,7 @@ changelog:
     - '^build(deps):'
 msi:
   - name: mongodb-atlas-cli_{{ .Version }}_windows_x86_64
-    wxs: ./build/package/wix/atlascli.wsx
+    wxs: ./build/package/wix/atlascli/product.wsx
 # signs:
 #   - id: linux_artifacts
 #     signature: "${artifact}.sig"
