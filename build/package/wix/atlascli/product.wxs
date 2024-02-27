@@ -1,14 +1,5 @@
 <?xml version="1.0"?>
 
-<?if $(sys.BUILDARCH)=x86?>
-    <?define Program_Files="ProgramFilesFolder"?>
-<?elseif $(sys.BUILDARCH)=x64?>
-    <?define Program_Files="ProgramFiles64Folder"?>
-<?else?>
-<?error Unsupported value of sys.BUILDARCH="$(sys)"?>
-    <?error Unsupported value of sys.BUILDARCH="$(sys.BUILDARCH)"?>
-<?endif?>
-
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
    <Product Id="*" UpgradeCode="5fa77b90-82f0-4a14-bec4-08b8a1a07b19"
       Name="MongoDB Atlas CLI"
@@ -27,7 +18,7 @@
       <Condition Message="A newer version of this software is already installed.">NOT
          NEWERVERSIONDETECTED</Condition>
       <Directory Id="TARGETDIR" Name="SourceDir">
-         <Directory Id="$(var.Program_Files)">
+         <Directory Id="ProgramFilesFolder">
             <Directory Id="INSTALLDIR" Name="MongoDB Atlas CLI">
                <Component Id="ApplicationFiles" Guid="cac1e5b1-6547-4c47-a68c-17a5b84dd87b">
                   <File Id="ApplicationFile0" Source="{{.Binary}}.exe" />
