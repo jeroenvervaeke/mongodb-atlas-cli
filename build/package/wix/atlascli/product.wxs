@@ -31,7 +31,7 @@
       <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="ignore" Impersonate="yes" />
       <InstallExecuteSequence>
          <RemoveExistingProducts After="InstallValidate" />
-         <Custon Action="AddToPath" After="InstallFinalize" />
+         <Custom Action="AddToPath" After="InstallFinalize" />
       </InstallExecuteSequence>
       <Feature Id="DefaultFeature" Level="1">
          <ComponentRef Id="ENVS" />
