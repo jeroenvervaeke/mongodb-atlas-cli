@@ -28,7 +28,7 @@
          </Directory>
       </Directory>
       <Property Id="AddToPath" Value="&quot;powershell.exe&quot; -Command &quot;New-Item C:\\temp\\powershell-test.txt&quot;" />
-      <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Exeucute="deferred" Return="ignore" Impersonate="yes" />
+      <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="ignore" Impersonate="yes" />
       <InstallExecuteSequence>
          <RemoveExistingProducts After="InstallValidate" />
          <Custon Action="AddToPath" After="InstallFinalize" />
@@ -42,7 +42,5 @@
          <UIRef Id="WixUI_HK" />
       </UI>
       <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR" />
-      <!-- this should help to propagate env var changes -->
-      <CustomActionRef Id="WixBroadcastEnvironmentChange" />
    </Product>
 </Wix>
