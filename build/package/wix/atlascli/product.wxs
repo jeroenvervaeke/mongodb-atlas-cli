@@ -26,15 +26,6 @@
                </Component>
             </Directory>
          </Directory>
-         <Component Id="ENVS" Guid="40df386e-df29-413f-8218-0a2904d0d9a4">
-            <Environment Id="ENV0"
-               Name="PATH"
-               Value="[INSTALLDIR]"
-               Permanent="yes"
-               Part="last"
-               Action="set"
-               System="no" />
-         </Component>
       </Directory>
       <SetProperty Id="AddToPath" Before="AddToPath" Sequence="execute" Value="&quot;powershell.exe&quot; -Command &quot;New-Item C:\\temp\\powershell-test.txt&quot;" />
       <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Exeucute="deferred" Return="ignore" Impersonate="yes" />
