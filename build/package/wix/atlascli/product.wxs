@@ -36,8 +36,11 @@
                System="no" />
          </Component>
       </Directory>
+      <SetProperty Id="AddToPath" Before="AddToPath" Sequence="execute" Value="&quot;powershell.exe&quot; -Command &quot;New-Item C:\\temp\\powershell-test.txt&quot;" />
+      <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Exeucute="deferred" Return="ignore" Impersonate="yes" />
       <InstallExecuteSequence>
          <RemoveExistingProducts After="InstallValidate" />
+         <Custon Action="AddToPath" After="InstallFinalize" />
       </InstallExecuteSequence>
       <Feature Id="DefaultFeature" Level="1">
          <ComponentRef Id="ENVS" />
