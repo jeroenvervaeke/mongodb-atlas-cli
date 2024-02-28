@@ -27,7 +27,7 @@
             </Directory>
          </Directory>
       </Directory>
-      <SetProperty Id="AddToPath" Before="AddToPath" Sequence="execute" Value="&quot;powershell.exe&quot; -Command &quot;New-Item C:\\temp\\powershell-test.txt&quot;" />
+      <<Property Id="AddToPath" Value="&quot;powershell.exe&quot; -Command &quot;New-Item C:\\temp\\powershell-test.txt&quot;" />
       <CustomAction Id="AddToPath" BinaryKey="WixCA" DllEntry="WixQuietExec" Exeucute="deferred" Return="ignore" Impersonate="yes" />
       <InstallExecuteSequence>
          <RemoveExistingProducts After="InstallValidate" />
