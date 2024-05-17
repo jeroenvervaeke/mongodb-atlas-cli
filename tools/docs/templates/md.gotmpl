@@ -1,0 +1,50 @@
+## {{ .CommandPath }}
+
+{{ .Short }}
+
+{{if .Long }}
+### Synopsis
+
+{{ .Long }}
+
+{{end}}
+{{if .Runnable}}### Usage
+```
+{{.UseLine | replaceRegex `\[([^\]]+)\]` "<$1>" | replace "<flags>" "[flags]" }}
+```{{end}}
+{{$aliases := alias .}}
+{{if $aliases}}### Aliases
+```
+{{ range $aliases }}
+{{ . }}{{end}}
+```{{end}}
+{{if .Example}}
+### Examples
+
+```
+{{.Example}}
+```{{end}}
+{{$flags := .NonInheritedFlags}}
+{{if $flags.HasAvailableFlags}}
+### Flags
+
+```
+{{$flags.FlagUsages}}
+```{{end}}
+{{$flags := .InheritedFlags}}
+{{if $flags.HasAvailableFlags}}
+### Flags inherited from parent commands
+
+```
+{{$flags.FlagUsages}}
+```{{end}}
+{{if or .HasParent .Commands}}
+### See Also
+
+{{ if .HasParent }}
+* [{{.Parent.CommandPath}}]({{.Parent.CommandPath | replace " " "_"}}.md)	- {{.Parent.Short}}
+{{end}}{{ range .Commands }}{{ if and .IsAvailableCommand (not (.IsAdditionalHelpTopicCommand)) }}
+* [{{.CommandPath}}]({{.CommandPath | replace " " "_"}}.md)	- {{.Short}}
+{{end}}{{end}}
+
+{{end}}

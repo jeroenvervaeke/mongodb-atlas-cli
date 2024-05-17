@@ -23,6 +23,7 @@ import (
 
 	"github.com/AlecAivazis/survey/v2/core"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/root"
+	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/talk"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/config"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/telemetry"
 	"github.com/spf13/cobra"
@@ -42,9 +43,14 @@ To learn more, see our documentation: https://www.mongodb.com/docs/atlas/cli/sta
 			telemetry.StartTrackingCommand(cmd, os.Args[1:])
 		}
 
+		if cmd.CommandPath() != "atlas talk" {
+			_ = talk.Hint(err)
+		}
+
 		telemetry.FinishTrackingCommand(telemetry.TrackOptions{
 			Err: err,
 		})
+
 		os.Exit(1)
 	}
 }

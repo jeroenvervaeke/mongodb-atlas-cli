@@ -59,6 +59,7 @@ import (
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/serverless"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/setup"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/streams"
+	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/talk"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/teams"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/users"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/config"
@@ -189,10 +190,19 @@ Use the --help flag with any command for more info on that command.`,
 			if check, isHb := notifier.shouldCheck(); check {
 				_ = notifier.notifyIfApplicable(isHb)
 			}
+
+			// if cmd.CommandPath() != "atlas talk" {
+			// 	_ = talk.Hint(nil)
+			// }
+
 			telemetry.FinishTrackingCommand(telemetry.TrackOptions{})
 		},
 	}
 	rootCmd.SetVersionTemplate(formattedVersion())
+
+	rootCmd.SetHelpTemplate(rootCmd.HelpTemplate() + `
+Note: you can use "atlas talk" for an interactive help experience.
+`)
 
 	// hidden shortcuts
 	loginCmd := auth.LoginBuilder()
@@ -245,6 +255,7 @@ Use the --help flag with any command for more info on that command.`,
 		auditing.Builder(),
 		deployments.Builder(),
 		federatedauthentication.Builder(),
+		talk.Builder(),
 	)
 
 	rootCmd.PersistentFlags().StringVarP(&profile, flag.Profile, flag.ProfileShort, "", usage.ProfileAtlasCLI)
@@ -303,6 +314,7 @@ func shouldCheckCredentials(cmd *cobra.Command) AuthRequirements {
 		fmt.Sprintf("%s %s", atlas, "register"):    NoAuth,       // user wants to set credentials
 		fmt.Sprintf("%s %s", atlas, "quickstart"):  NoAuth,       // command supports login
 		fmt.Sprintf("%s %s", atlas, "deployments"): OptionalAuth, // command supports local and Atlas
+		fmt.Sprintf("%s %s", atlas, "talk"):        NoAuth,       // do not require credentials
 	}
 	for p, r := range customRequirements {
 		if strings.HasPrefix(cmd.CommandPath(), p) {

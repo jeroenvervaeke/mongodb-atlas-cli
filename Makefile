@@ -110,7 +110,7 @@ gen-mocks: ## Generate mocks
 .PHONY: gen-docs
 gen-docs: ## Generate docs for atlascli commands
 	@echo "==> Generating docs"
-	go run -ldflags "$(ATLAS_LINKER_FLAGS)" ./tools/docs/main.go
+	go run -ldflags "$(ATLAS_LINKER_FLAGS)" ./tools/docs
 
 .PHONY: build
 build: ## Generate an atlas binary in ./bin

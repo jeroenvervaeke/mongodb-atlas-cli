@@ -21,6 +21,7 @@ import (
 	"github.com/mongodb-labs/cobra2snooty"
 	"github.com/mongodb/mongodb-atlas-cli/atlascli/internal/cli/root"
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
 func setDisableAutoGenTag(cmd *cobra.Command) {
@@ -30,22 +31,37 @@ func setDisableAutoGenTag(cmd *cobra.Command) {
 	}
 }
 
-func main() {
-	if err := os.RemoveAll("./docs/command"); err != nil {
-		log.Fatal(err)
-	}
-
-	const docsPermissions = 0766
-	if err := os.MkdirAll("./docs/command", docsPermissions); err != nil {
-		log.Fatal(err)
-	}
-
+func run() error {
 	atlasBuilder := root.Builder()
 	atlasBuilder.InitDefaultCompletionCmd()
 
 	setDisableAutoGenTag(atlasBuilder)
 
-	if err := cobra2snooty.GenTreeDocs(atlasBuilder, "./docs/command"); err != nil {
+	docs := map[string]func(cmd *cobra.Command, dir string) error{
+		"./docs/command":         cobra2snooty.GenTreeDocs,
+		"./docs/command-cobramd": doc.GenMarkdownTree,
+		"./docs/command-md":      genMdDocs,
+		"./docs/command-json":    genJsonDocs,
+	}
+
+	for dir, f := range docs {
+		const docsPermissions = 0766
+		if err := os.RemoveAll(dir); err != nil {
+			return err
+		}
+		if err := os.MkdirAll(dir, docsPermissions); err != nil {
+			return err
+		}
+		if err := f(atlasBuilder, dir); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func main() {
+	if err := run(); err != nil {
 		log.Fatal(err)
 	}
 }
